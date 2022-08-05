@@ -51,13 +51,31 @@ okenSdk.onRequestPermissionsResult(requestCode, permissions, grantResults)
 ### Open book
 Initialize reading session:
 ```
-IOkenSdk.IOkenBook book = okenSdk.bookOpened(bookUniqueId, view, lifecycleOwner);
+private lateinit var readingSession: IOkenSdk.IOkenBook
+
+override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    binding = ScreenReaderBinding.inflate(inflater, container, false)
+    readingSession = okenSdk.bookOpened(bookUid, bookFilename, binding.readerWebview, lifecycleOwner = this)
+    return binding.root
+}
+
+override fun onResume() {
+    super.onResume()
+    readingSession.startReading(binding.readerWebview)
+}
 ```
 And call methods when page was opened:
 ```
-book.pageOpened(pageNum)
+readingSession.pageOpened(getPageNumber())
 ```
 And closed:
 ```
-book.pageClosed()
+readingSession.pageClosed()
+```
+Then close reading sesssion:
+```
+override fun onPause() {
+    super.onPause()
+    readingSession.stopReading()
+}
 ```
