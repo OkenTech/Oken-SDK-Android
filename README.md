@@ -38,11 +38,24 @@ Put your api key in AndroidManifest.xml inside the `<applicatoin>` tag:
 ## Usage
 Instantiate Oken SDK:
 ```
-IOkenSdk okenSdk = new OkenSdk();
+class App : Application() {
+    lateinit var okenSdk: IOkenSdk
+
+    override fun onCreate() {
+        super.onCreate()
+        okenSdk = OkenSdk(this)
+    }
+}
 ```
+**Option 1**  
 Initialize it. At this moment Oken SDK will ask for permissions:
 ```
-okenSdk.init(activity, "<USER_UNIQUE_ID>");
+okenSdk.init(requireActivity(), "<USER_UNIQUE_ID>")
+```
+**Option 2**  
+```
+okenSdk.initAndRequestPermissionsLater("<USER_UNIQUE_ID>")
+okenSdk.requestPermissions(requireActivity())
 ```
 And when permissions received call:
 ```
@@ -54,9 +67,9 @@ Initialize reading session:
 private lateinit var readingSession: IOkenSdk.IOkenBook
 
 override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-    binding = ScreenReaderBinding.inflate(inflater, container, false)
-    readingSession = okenSdk.bookOpened(bookUid, bookFilename, binding.readerWebview, lifecycleOwner = this)
-    return binding.root
+    ...
+    readingSession = okenSdk.bookOpened(bookUid, bookFilename, readerWebview, this)
+    ...
 }
 
 override fun onResume() {
