@@ -43,7 +43,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        okenSdk = OkenSdk(this)
+        okenSdk = OkenSdk.getInstance(this)
     }
 }
 ```
