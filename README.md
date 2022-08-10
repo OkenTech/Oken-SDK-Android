@@ -68,7 +68,7 @@ private lateinit var readingSession: IOkenSdk.IOkenBook
 
 override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
     ...
-    readingSession = okenSdk.bookOpened(bookUid, bookFilename, readerWebview, this)
+    readingSession = okenSdk.bookOpened(bookUniqueId, bookFilename, readerWebview, this)
     ...
 }
 
@@ -91,4 +91,12 @@ override fun onPause() {
     super.onPause()
     readingSession.stopReading()
 }
+```
+### Get list of sessions
+```
+okenSdk.getSessionsForBook(bookUid)
+```
+### Get reading metric
+```
+val metric = sdk.getMetricForBook(bookUniqueId)
 ```
