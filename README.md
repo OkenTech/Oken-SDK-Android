@@ -17,7 +17,7 @@ And put it into your `app/libs` folder.
 Add the required dependencies and client libraries to your app module:
 ```
 dependencies {
-    implementation files('libs/tech.oken-sdk.android-0.0.14-dev-debug.aar')
+    implementation files('libs/tech.oken-sdk.android-0.0.16-stage-debug.aar')
 }
 ```
 
