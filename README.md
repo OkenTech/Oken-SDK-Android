@@ -17,7 +17,7 @@ And put it into your `app/libs` folder.
 Add the required dependencies and client libraries to your app module:
 ```
 dependencies {
-    implementation files('libs/tech.oken-sdk.android-0.0.16-stage-debug.aar')
+    implementation files('libs/tech.oken-sdk.android-0.1.18-prod-release.aar')
 }
 ```
 
@@ -94,9 +94,16 @@ override fun onPause() {
 ```
 ### Get list of sessions
 ```
-okenSdk.getSessionsForBook(bookUid)
+okenSdk.getSessionsForBook(bookUniqueId)
 ```
 ### Get reading metric
 ```
 val metric = sdk.getMetricForBook(bookUniqueId)
+```
+### Listen to metrics in real time
+```
+okenSdk.onMetricsUpdated { resp ->
+    Log.d("OkenSDK", "Attention ${resp.getAttention().value * 100}")
+    Log.d("OkenSDK", "Comprehension ${resp.getComprehension().value * 100}")
+}
 ```
